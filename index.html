@@ -1,0 +1,1214 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Образование без границ</title>
+<meta name="description" content="Центр развития «Образование без границ», Уфа: олимпиадная математика и физика, подготовка к ОГЭ и ЕГЭ, «Школа Физтеха» (проект МФТИ) для 2–11 классов.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Образование без границ — центр развития в Уфе">
+<meta property="og:description" content="Олимпиадная математика и физика, ОГЭ и ЕГЭ, «Школа Физтеха» вместе с МФТИ — для 2–11 классов.">
+<meta property="og:image" content="https://vemer02.github.io/librastudy/img/hero.jpg">
+<meta property="og:url" content="https://vemer02.github.io/librastudy/">
+<meta name="theme-color" content="#FDFEFF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap">
+<style>
+/* Layout: страница-тетрадь в клетку с красной линией полей; пометки «красной ручкой учителя»; тёмная тема — школьная доска */
+:root{
+  /* цвета логотипа центра: бирюза #00668A, красный #D82237, серый #728287 */
+  --paper:#FDFEFF;
+  --surface:#FFFFFF;
+  --surface-2:#EEF5F8;
+  --grid:rgba(0,102,138,.06);
+  --ink:#10384B;
+  --ink-2:#4A6672;
+  --line:rgba(16,56,75,.14);
+  --pen:#D82237;
+  --pen-soft:rgba(216,34,55,.09);
+  --hl:rgba(255,210,48,.72);
+  --note:#FFE27A;
+  --note-fg:#2B2508;
+  --leaf:#13885A;
+  --band:#0D3548;
+  --band-2:#14445A;
+  --band-fg:#F1F7F9;
+  --band-fg-2:#B3CAD3;
+  --band-line:rgba(255,255,255,.14);
+  --band-grid:rgba(255,255,255,.05);
+  --btn:#00668A;
+  --btn-fg:#FFFFFF;
+  --btn-hover:#D82237;
+  --btn-hover-fg:#FFFFFF;
+  --logo-teal:#00668A;
+  --logo-grey:#728287;
+  --shadow:0 1px 0 rgba(16,56,75,.05),0 16px 34px -20px rgba(16,56,75,.38);
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Golos Text","Segoe UI",Roboto,system-ui,sans-serif;
+  --f-hand:"Caveat","Segoe Print","Comic Sans MS",cursive;
+  --wrap:1180px;
+  --r:20px;
+}
+/* сайт всегда светлый, без тёмной темы */
+:root{color-scheme:light}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;font-family:var(--f-body);font-size:16px;line-height:1.6;color:var(--ink);
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;overflow-x:clip;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:50;background:var(--paper)}
+/* красная линия полей, как в тетради */
+body::after{content:"";position:fixed;top:0;bottom:0;left:max(8px,calc(50% - var(--wrap)/2 - 22px));width:2px;background:var(--pen);opacity:.3;pointer-events:none;z-index:0}
+a{color:inherit}
+img{max-width:100%;display:block}
+::selection{background:var(--hl);color:var(--ink)}
+
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.sec{padding-block:clamp(64px,9vw,120px);position:relative}
+section[id]{scroll-margin-top:84px}
+
+h1,h2,h3{font-family:var(--f-display);color:var(--ink);text-wrap:balance;margin:0}
+h1{font-weight:700;font-size:clamp(1.95rem,5vw,3.9rem);line-height:1.08;letter-spacing:-.025em}
+h2{font-weight:700;font-size:clamp(1.5rem,3.2vw,2.45rem);line-height:1.15;letter-spacing:-.02em}
+h3{font-weight:600;font-size:1.08rem;line-height:1.3;letter-spacing:-.01em}
+p{margin:0}
+.lead{font-size:clamp(1.05rem,1.4vw,1.18rem);color:var(--ink-2);max-width:60ch;text-wrap:pretty}
+.eyebrow{display:inline-block;font-family:var(--f-hand);font-weight:700;font-size:1.55rem;color:var(--pen);line-height:1;transform:rotate(-1.5deg);transform-origin:left center}
+.mark{background:linear-gradient(transparent 56%,var(--hl) 56%,var(--hl) 92%,transparent 92%);padding-inline:.06em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.sec-head{display:flex;flex-direction:column;align-items:flex-start;gap:14px;max-width:780px;margin-bottom:clamp(32px,4vw,52px)}
+
+/* кнопки */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;min-height:52px;padding:0 1.5rem;border-radius:999px;font-family:var(--f-display);font-weight:600;font-size:.88rem;letter-spacing:.01em;line-height:1.2;text-decoration:none;text-align:center;border:2px solid var(--btn);background:var(--btn);color:var(--btn-fg);cursor:pointer;transition:transform .2s,background-color .2s,border-color .2s,color .2s}
+.btn:hover{background:var(--btn-hover);border-color:var(--btn-hover);color:var(--btn-hover-fg);transform:translateY(-2px)}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn--ghost:hover{background:var(--surface);color:var(--ink);border-color:var(--ink)}
+.btn--note{background:var(--note);border-color:var(--note);color:var(--note-fg)}
+.btn--note:hover{background:var(--band-fg);border-color:var(--band-fg);color:var(--band)}
+.btn svg{width:18px;height:18px;flex:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--pen);outline-offset:3px}
+
+/* шапка */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--paper);background:color-mix(in srgb,var(--paper) 86%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:72px;position:relative}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);min-width:0}
+.logo-svg{width:118px;height:48px;display:block;flex:none}
+#lbg-logo use[fill="#00668a"]{fill:var(--logo-teal)}
+#lbg-logo use[fill="#728287"]{fill:var(--logo-grey)}
+#lbg-logo use[fill="#d82237"]{fill:var(--pen)}
+.brand-city{font-family:var(--f-hand);font-weight:700;font-size:1.3rem;color:var(--pen);line-height:1;transform:rotate(-4deg);white-space:nowrap}
+.nav{display:flex;align-items:center;gap:2px}
+.nav a{padding:8px 12px;border-radius:999px;text-decoration:none;font-weight:500;font-size:.94rem;color:var(--ink-2);transition:background-color .2s,color .2s}
+.nav a:hover{color:var(--ink);background:var(--surface-2)}
+.top-cta{display:flex;align-items:center;gap:16px}
+.top-phone{font-weight:600;text-decoration:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+.top .btn{min-height:44px;padding:0 1.15rem;font-size:.82rem}
+.burger{display:none;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;align-items:center;justify-content:center}
+.burger svg{width:22px;height:22px}
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--pen);transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
+@media (max-width:1060px){
+  .nav{display:none}
+  .nav.open{display:flex;flex-direction:column;align-items:stretch;position:absolute;top:100%;left:0;right:0;padding:10px max(20px,env(safe-area-inset-right,0px)) 18px max(20px,env(safe-area-inset-left,0px));background:var(--paper);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .nav.open a{padding:12px 14px;font-size:1.02rem}
+  .burger{display:inline-flex}
+}
+@media (max-width:760px){.top-phone{display:none}}
+@media (max-width:560px){.top .btn{display:none}.logo-svg{width:104px;height:42px}}
+
+/* герой */
+.hero{padding-block:clamp(36px,6vw,80px) clamp(40px,6vw,72px);position:relative}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(36px,5vw,64px);align-items:center}
+.hero-copy{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.chip-live{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 13px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:.88rem;box-shadow:var(--shadow)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--leaf);animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 var(--leaf)}80%,100%{box-shadow:0 0 0 9px transparent}}
+.scribble{position:relative;display:inline-block;white-space:nowrap}
+.scribble svg{position:absolute;left:-3%;bottom:-.24em;width:106%;height:.42em;overflow:visible;pointer-events:none}
+.scribble path{fill:none;stroke:var(--pen);stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:0;animation:draw .9s .35s cubic-bezier(.6,.1,.3,1) both}
+.scribble path+path{animation-delay:.9s;animation-duration:.6s}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px}
+.trust{display:flex;flex-wrap:wrap;gap:10px 22px;list-style:none;margin:6px 0 0;padding:0;color:var(--ink-2);font-size:.93rem}
+.trust li{display:flex;align-items:center;gap:8px}
+.trust b{color:var(--ink);font-weight:700}
+.trust svg{width:18px;height:18px;color:var(--pen);flex:none}
+
+.hero-art{position:relative;padding:22px 7% 74px 2%;max-width:540px;width:100%;justify-self:center}
+.polaroid{background:var(--surface);padding:12px 12px 14px;border-radius:6px;box-shadow:var(--shadow);position:relative;margin:0}
+.polaroid figcaption{margin-top:10px;font-family:var(--f-hand);font-size:1.3rem;font-weight:500;color:var(--ink-2);text-align:center;line-height:1.15;min-height:1.2em}
+.tape{position:absolute;top:-13px;left:50%;width:92px;height:26px;transform:translateX(-50%) rotate(-3deg);background:var(--note);opacity:.78;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.hero-photo{transform:rotate(-2.2deg)}
+.ph{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:4px;overflow:hidden;background-color:var(--surface-2);background-image:repeating-linear-gradient(-45deg,transparent 0 12px,var(--grid) 12px 13px);display:grid;place-items:center;color:var(--ink-2)}
+.ph > svg{width:42%;max-width:110px;height:auto;opacity:.8}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph.has-photo > svg{display:none}
+.hero-photo .ph{aspect-ratio:5/4}
+.hero-photo .ph > svg.board{width:88%;max-width:none;opacity:1}
+.board .s{fill:none;stroke:var(--ink-2);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.board .p{fill:none;stroke:var(--pen);stroke-width:3;stroke-linecap:round}
+.board text{font-family:var(--f-hand);font-weight:700;fill:var(--ink)}
+.board .tp{fill:var(--pen)}
+.sticky{position:absolute;right:0;bottom:0;width:min(250px,56%);background:var(--note);color:var(--note-fg);padding:16px 18px 18px;transform:rotate(3deg);box-shadow:0 14px 26px -16px rgba(0,0,0,.55);font-family:var(--f-hand);font-size:1.28rem;line-height:1.15;z-index:2}
+.sticky b{display:block;font-size:1.5rem;margin-bottom:4px}
+.sticky a{display:inline-block;margin-top:8px;font-weight:700;color:var(--note-fg);text-underline-offset:3px}
+.stamp{position:absolute;top:-4px;right:2%;width:104px;transform:rotate(-8deg);z-index:3;text-align:center;text-decoration:none}
+.stamp svg{width:100%;height:auto;display:block;overflow:visible}
+.stamp .ring{fill:none;stroke:var(--pen);stroke-width:4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;animation:draw 1s 1.2s ease-out both}
+.stamp text{font-family:var(--f-hand);font-weight:700;fill:var(--pen)}
+.stamp span{display:block;font-family:var(--f-hand);font-weight:700;color:var(--pen);font-size:1.15rem;line-height:1;margin-top:-4px}
+.doodle{position:absolute;font-family:var(--f-hand);font-weight:700;color:var(--ink-2);opacity:.55;pointer-events:none;animation:float 6s ease-in-out infinite;user-select:none}
+.doodle svg{width:100%;height:auto;display:block}
+@keyframes float{0%,100%{transform:translateY(0) rotate(var(--r0,0deg))}50%{transform:translateY(-10px) rotate(calc(var(--r0,0deg) + 6deg))}}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);margin-top:clamp(40px,6vw,72px)}
+.stat{padding:26px 22px;display:flex;flex-direction:column;gap:8px}
+.stat+.stat{border-left:2px dashed var(--line)}
+.stat b{font-family:var(--f-display);font-weight:700;font-size:clamp(1.8rem,3.4vw,2.7rem);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{color:var(--ink-2);font-size:.95rem;line-height:1.4}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .hero-art{max-width:480px}
+}
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:2px dashed var(--line)}
+  .stat{padding:22px 14px}
+}
+@media (max-width:480px){
+  .hero-art{padding:18px 4% 86px 0}
+  .sticky{width:62%;font-size:1.14rem;padding:13px 14px 15px}
+  .sticky b{font-size:1.32rem}
+  .stamp{width:84px}
+}
+
+/* бегущая строка */
+.ticker{background:var(--note);color:var(--note-fg);border-block:2px solid var(--note-fg);overflow:hidden;position:relative;z-index:1;transform:rotate(-1.2deg);margin:22px -2%}
+.ticker-track{display:flex;width:max-content;animation:tick 42s linear infinite}
+.ticker ul{display:flex;align-items:center;list-style:none;margin:0;padding:0}
+.ticker li{display:flex;align-items:center;gap:26px;padding:15px 13px;font-family:var(--f-display);font-weight:600;font-size:.92rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.ticker li::after{content:"✳";color:var(--pen);font-size:1rem}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* направления */
+.prog-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(28px,3.5vw,44px)}
+.prog-head .sec-head{margin-bottom:0}
+.filter{display:flex;flex-wrap:wrap;gap:8px}
+.chipbtn{font:600 .9rem var(--f-body);padding:10px 16px;min-height:44px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:background-color .2s,color .2s,border-color .2s;font-variant-numeric:tabular-nums}
+.chipbtn:hover{border-color:var(--ink)}
+.chipbtn[aria-pressed="true"],.chipbtn[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px 22px;display:flex;flex-direction:column;gap:14px;transition:transform .25s,box-shadow .25s,opacity .3s,filter .3s;position:relative;min-width:0}
+.card:hover{transform:translateY(-4px) rotate(-.35deg);box-shadow:var(--shadow)}
+.card.is-dim{opacity:.3;filter:grayscale(.7)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.grade{font-family:var(--f-display);font-weight:800;font-size:2.35rem;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.grade small{display:block;font-family:var(--f-body);font-weight:600;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-top:8px}
+.tag{font-size:.78rem;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.tag--pen{background:var(--pen-soft);color:var(--pen)}
+.card p{color:var(--ink-2)}
+.ticks{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:.95rem;line-height:1.45}
+.ticks li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;align-items:start}
+.ticks li::before{content:"";width:16px;height:12px;margin-top:4px;border-left:2.5px solid var(--pen);border-bottom:2.5px solid var(--pen);transform:rotate(-48deg) scale(.85);transform-origin:center}
+.small-note{font-size:.86rem;color:var(--ink-2);padding-top:12px;border-top:1px dashed var(--line)}
+.card-actions{margin-top:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding-top:6px}
+.link-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:600;font-size:.84rem;color:var(--ink);text-decoration:none;padding:8px 0 6px;border-bottom:2px solid var(--pen)}
+.link-btn:hover{color:var(--pen)}
+.link-soft{font-size:.88rem;color:var(--ink-2);text-underline-offset:4px}
+.card--cta{background:var(--band);color:var(--band-fg);border-color:transparent;background-image:linear-gradient(var(--band-grid) 1px,transparent 1px),linear-gradient(90deg,var(--band-grid) 1px,transparent 1px);background-size:22px 22px;justify-content:space-between}
+.card--cta h3{color:var(--band-fg);font-size:1.35rem}
+.card--cta p{color:var(--band-fg-2)}
+.card--cta .eyebrow{color:var(--note)}
+@media (max-width:1020px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.cards{grid-template-columns:minmax(0,1fr)}}
+
+/* физтех */
+.band{background-color:var(--band);background-image:linear-gradient(var(--band-grid) 1px,transparent 1px),linear-gradient(90deg,var(--band-grid) 1px,transparent 1px);background-size:26px 26px;color:var(--band-fg);position:relative;z-index:1}
+.band h2,.band h3{color:var(--band-fg)}
+.band .lead{color:var(--band-fg-2)}
+.band .eyebrow{color:var(--note)}
+.fz-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(36px,5vw,72px);align-items:start}
+.fz-list{list-style:none;margin:30px 0 0;padding:0;border-top:1px solid var(--band-line)}
+.fz-list li{display:grid;grid-template-columns:170px minmax(0,1fr);gap:20px;padding:17px 0;border-bottom:1px solid var(--band-line)}
+.fz-list b{font-family:var(--f-display);font-weight:600;font-size:.92rem;line-height:1.4}
+.fz-list span{color:var(--band-fg-2)}
+.fz-side{display:flex;flex-direction:column;gap:18px}
+.chalkboard{border:1px solid var(--band-line);border-radius:var(--r);padding:20px 20px 12px;background:var(--band-2)}
+.chalkboard svg{width:100%;height:auto;display:block}
+.chalk{fill:none;stroke:var(--band-fg);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.chalk-dash{fill:none;stroke:var(--band-fg-2);stroke-width:2;stroke-dasharray:4 7;stroke-linecap:round}
+.chalkboard text{font-family:var(--f-hand);font-weight:700;fill:var(--band-fg)}
+.chalkboard .accent{fill:var(--note)}
+.bob{fill:var(--note)}
+.pend{transform-box:view-box;transform-origin:150px 24px;animation:swing 1.6s ease-in-out infinite alternate}
+@keyframes swing{from{transform:rotate(-19deg)}to{transform:rotate(19deg)}}
+.admit{border:2px dashed var(--band-line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.admit p{color:var(--band-fg-2)}
+@media (max-width:900px){.fz-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:620px){.fz-list li{grid-template-columns:minmax(0,1fr);gap:4px}}
+
+/* шаги */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.step{position:relative;display:flex;flex-direction:column;gap:10px}
+.step-n{width:62px;height:62px;position:relative;display:grid;place-items:center;font-family:var(--f-hand);font-weight:700;font-size:2.2rem;color:var(--pen);line-height:1}
+.step-n svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.step-n path{fill:none;stroke:var(--pen);stroke-width:2.5;stroke-linecap:round}
+.step:not(:last-child)::after{content:"";position:absolute;top:31px;left:80px;right:-14px;border-top:2px dashed var(--line)}
+.step p{color:var(--ink-2);font-size:.97rem}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.step::after{display:none}}
+@media (max-width:520px){.steps{grid-template-columns:minmax(0,1fr)}}
+
+/* задача */
+.task-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(30px,4vw,64px);align-items:center}
+.task-grid .sec-head{margin-bottom:0}
+.sheet{background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:26px 26px 24px 54px;position:relative}
+.sheet::before{content:"";position:absolute;top:0;bottom:0;left:32px;width:2px;background:var(--pen);opacity:.45}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.problem{font-size:1.14rem;line-height:1.55;margin-bottom:18px;min-height:5em;font-weight:500}
+.answer-row{display:flex;flex-wrap:wrap;gap:10px}
+.answer-row input{flex:1 1 150px;min-width:0;height:52px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font:600 1.15rem var(--f-body);padding:0 16px}
+.answer-row input:focus{border-color:var(--ink)}
+.feedback{margin-top:14px;font-family:var(--f-hand);font-weight:700;font-size:1.55rem;line-height:1.2;min-height:1.3em}
+.feedback.ok{color:var(--leaf)}
+.feedback.no{color:var(--pen)}
+.solution{margin-top:8px;padding:14px 16px;border-radius:12px;background:var(--surface-2);color:var(--ink-2);font-size:.98rem}
+.text-btn{background:none;border:0;padding:8px 0;font:600 .92rem var(--f-body);color:var(--ink-2);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.text-btn:hover{color:var(--ink)}
+@media (max-width:900px){.task-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.sheet{padding:22px 18px 20px 36px}.sheet::before{left:20px}.problem{font-size:1.05rem}}
+
+/* преподаватели */
+.teachers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.t-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0;transition:transform .25s,box-shadow .25s}
+.t-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.avatar{width:84px;height:84px;flex:none;border-radius:50%;background:var(--hl);border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--f-hand);font-weight:700;font-size:2rem;color:var(--ink);position:relative;overflow:hidden;line-height:1}
+.avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+.avatar.has-photo{color:transparent}
+.t-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.t-name{font-family:var(--f-display);font-weight:600;font-size:1rem;line-height:1.3}
+.t-name span{display:block;font-family:var(--f-body);font-weight:500;font-size:.94rem;color:var(--ink-2);letter-spacing:0}
+.t-subj{font-family:var(--f-hand);font-weight:700;font-size:1.32rem;color:var(--pen);line-height:1.1}
+.t-card p{font-size:.92rem;color:var(--ink-2);line-height:1.5}
+.director{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 28px;padding:22px 24px;border:2px dashed var(--line);border-radius:var(--r)}
+.director p{max-width:70ch;color:var(--ink-2)}
+.director b{color:var(--ink)}
+@media (max-width:1020px){.teachers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){
+  .teachers{grid-template-columns:minmax(0,1fr)}
+  .t-card{flex-direction:row;align-items:flex-start;gap:16px;padding:18px}
+  .avatar{width:64px;height:64px;font-size:1.6rem}
+}
+
+/* отзывы */
+.rev-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(30px,4vw,44px)}
+.rev-head .sec-head{margin-bottom:0}
+.rating{display:flex;align-items:center;gap:14px;padding:12px 22px 12px 12px;background:var(--surface);border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:transform .2s,box-shadow .2s}
+.rating:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.rating svg{width:62px;height:62px;flex:none;overflow:visible}
+.rating .ring{fill:none;stroke:var(--pen);stroke-width:4;stroke-linecap:round}
+.rating text{font-family:var(--f-hand);font-weight:700;fill:var(--pen)}
+.rating b{display:block;font-family:var(--f-display);font-weight:700;font-size:1rem}
+.rating span{font-size:.88rem;color:var(--ink-2)}
+.quote{margin:0 0 clamp(30px,4vw,48px);display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;max-width:900px}
+.quote-mark{font-family:var(--f-hand);font-weight:700;font-size:5rem;line-height:.8;color:var(--pen)}
+.quote p{font-family:var(--f-display);font-weight:600;font-size:clamp(1.15rem,2.3vw,1.75rem);line-height:1.35;letter-spacing:-.015em;text-wrap:balance}
+.quote footer{grid-column:2;font-size:.92rem;color:var(--ink-2)}
+.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.res{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.res-subj{font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pen)}
+.res-big{font-family:var(--f-display);font-weight:700;font-size:clamp(1.45rem,2.4vw,1.95rem);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.res p{color:var(--ink-2);font-size:.97rem}
+.res cite{margin-top:auto;font-style:normal;font-size:.85rem;color:var(--ink-2);padding-top:12px;border-top:1px dashed var(--line)}
+.rev-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+@media (max-width:1020px){.results{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.results{grid-template-columns:minmax(0,1fr)}.quote-mark{font-size:3.6rem}}
+
+/* фото */
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px 22px}
+.g-item{--rot:0deg;transform:rotate(var(--rot));transition:transform .3s}
+.g-item:hover{transform:rotate(0deg) scale(1.03)}
+.g-item:nth-child(4n+1){--rot:-1.6deg}
+.g-item:nth-child(4n+2){--rot:1.2deg}
+.g-item:nth-child(4n+3){--rot:-.7deg}
+.g-item:nth-child(4n){--rot:1.7deg}
+.g-item .polaroid{padding:10px 10px 12px}
+.g-item .ph{aspect-ratio:1/1}
+.g-item figcaption{font-size:1.15rem;min-height:2.3em;display:flex;align-items:flex-start;justify-content:center}
+@media (max-width:900px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px}}
+
+/* партнёры */
+.partners{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,72px);align-items:start}
+.partners .sec-head{margin-bottom:0}
+.p-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.p-list li{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr);gap:20px;padding:19px 0;border-bottom:1px dashed var(--line)}
+.p-list b{font-family:var(--f-display);font-weight:600;font-size:.98rem;line-height:1.35}
+.p-list span{color:var(--ink-2)}
+@media (max-width:900px){.partners{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:620px){.p-list li{grid-template-columns:minmax(0,1fr);gap:4px}}
+
+/* запись и контакты */
+.contact-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px;align-items:stretch}
+.form-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,3vw,36px);box-shadow:var(--shadow)}
+.form{display:grid;gap:16px}
+.form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:grid;gap:6px;min-width:0}
+.field label{font-size:.88rem;font-weight:600;color:var(--ink-2)}
+.field input,.field select,.field textarea{width:100%;min-height:52px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font:500 1rem var(--f-body);padding:12px 14px}
+.field textarea{min-height:92px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink)}
+.check{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;font-size:.88rem;color:var(--ink-2);align-items:start;line-height:1.45}
+.check input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--pen)}
+.form-err{color:var(--pen);font-weight:600;font-size:.92rem}
+.form-ok{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding-block:20px}
+.form-ok .eyebrow{font-size:2rem}
+.form-ok p{color:var(--ink-2)}
+.info{background-color:var(--band);background-image:linear-gradient(var(--band-grid) 1px,transparent 1px),linear-gradient(90deg,var(--band-grid) 1px,transparent 1px);background-size:22px 22px;color:var(--band-fg);border-radius:24px;padding:clamp(22px,3vw,36px);display:flex;flex-direction:column;gap:24px;position:relative;z-index:1}
+.info dl{margin:0;display:grid;gap:18px}
+.info dt{font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--band-fg-2)}
+.info dd{margin:5px 0 0;font-size:1.04rem;font-weight:500;line-height:1.5}
+.info dd a{color:var(--band-fg);text-underline-offset:3px}
+.phone-line{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-variant-numeric:tabular-nums}
+.phone-line small{color:var(--band-fg-2);font-size:.86rem}
+.copy{font:600 .74rem var(--f-body);padding:5px 11px;border-radius:999px;border:1px solid var(--band-line);background:transparent;color:var(--band-fg-2);cursor:pointer}
+.copy:hover{color:var(--band-fg);border-color:var(--band-fg-2)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills a{padding:9px 14px;border-radius:999px;border:1px solid var(--band-line);text-decoration:none;font-weight:600;font-size:.88rem;color:var(--band-fg);transition:background-color .2s,color .2s}
+.pills a:hover{background:var(--band-fg);color:var(--band)}
+@media (max-width:900px){.contact-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.form-row{grid-template-columns:minmax(0,1fr)}}
+
+/* подвал */
+.foot{background:var(--band);color:var(--band-fg-2);position:relative;z-index:1;padding-block:52px 34px;font-size:.92rem}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(2,minmax(0,1fr));gap:32px}
+.foot b{color:var(--band-fg);font-family:var(--f-display);font-weight:600;font-size:.92rem;display:block;margin-bottom:12px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot a{color:var(--band-fg-2);text-underline-offset:3px}
+.foot a:hover{color:var(--band-fg)}
+.foot-bottom{margin-top:36px;padding-top:20px;border-top:1px solid var(--band-line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:.84rem}
+@media (max-width:760px){.foot-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* нижняя панель на телефоне */
+.mbar{display:none}
+@media (max-width:760px){
+  .mbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:var(--paper);background:color-mix(in srgb,var(--paper) 90%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .mbar .btn{min-height:48px;padding:0 1rem;font-size:.82rem}
+  body{padding-bottom:76px}
+}
+
+/* лёгкое появление при прокрутке — блоки всегда видимы, только сдвиг */
+.js .rise{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .rise:not(.in){transform:translateY(26px)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .js .rise:not(.in){transform:none}
+}
+
+[hidden]{display:none!important}
+.map{margin-top:22px;border-radius:24px;overflow:hidden;border:1px solid var(--line);height:clamp(280px,40vw,420px);background:var(--surface-2)}
+.map iframe{display:block;width:100%;height:100%;border:0}
+</style>
+</head>
+<body>
+
+<svg class="sprite" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="lbga" d="M61.13 63.003L55 62l.282 39.738L87 108 60.966 96.798z"/><path id="lbgb" d="M71.288 57.931L65 55l.307 39.891L91 107 71.263 92.985z"/><path id="lbgc" d="M174 55l-6.289 2.931.026 35.054L148 107l25.693-12.109z"/><path id="lbgd" d="M177.87 63.003l.164 33.795L152 108l31.718-6.262L184 62z"/><path id="lbge" d="M159.185 70.72v1.995h2.75v1.607h-2.75v1.97H163V77.9h-5.674v-8.787h5.538v1.607zm-3.209 7.18h-1.858v-5.561l-3.22 5.56h-1.86v-8.786h1.86v5.61l3.22-5.61h1.858zm-8.277 0h-1.861v-3.578h-3.213V77.9h-1.861v-8.787h1.86v3.602h3.214v-3.602h1.86zm-10.887-3.452l-1.065-3.302-1.066 3.314c.31.163.706.276 1.053.276.36 0 .768-.125 1.078-.288zm.496 1.544c-.484.188-1.016.351-1.574.351-.545 0-1.077-.163-1.548-.339l-.62 1.896h-1.97l3.147-8.787h2.007l3.147 8.787h-1.982zm-9.031.3c.656 0 1.09-.4 1.09-1.016 0-.577-.434-1.042-1.09-1.042h-1.858v2.059zm-.248-5.572h-1.61v1.92l1.61-.012c.57 0 .954-.364.954-.942 0-.552-.384-.966-.954-.966zm3.206 4.644c0 1.255-.819 2.536-2.953 2.536h-3.721v-8.787h3.56c1.96 0 2.73 1.218 2.73 2.31 0 .753-.36 1.644-.956 1.845.807.276 1.34 1.08 1.34 2.096zm-14.392-1.845c0 1.757.978 2.874 2.242 2.874 1.276 0 2.255-1.117 2.255-2.874 0-1.745-.979-2.9-2.255-2.9-1.264 0-2.242 1.155-2.242 2.9zm6.365 0c0 2.824-1.848 4.481-4.118 4.481-2.27 0-4.105-1.657-4.105-4.481s1.835-4.506 4.105-4.506c2.27 0 4.118 1.682 4.118 4.506zm-9.784-1.92c0 .614-.26 1.23-.892 1.757.681.565.966 1.255.966 1.92 0 1.393-1.263 2.724-2.85 2.724-1.684 0-2.7-1.017-2.7-1.017l.682-1.48s.83.89 1.895.89c.669 0 1.115-.389 1.115-.966 0-.703-.446-1.168-1.115-1.18h-1.511V72.64h1.511c.743 0 1.04-.402 1.04-1.017 0-.615-.507-1.016-1.04-1.016-1.065 0-1.895.916-1.895.916l-.682-1.494s1.016-1.029 2.7-1.029c1.525 0 2.776 1.268 2.776 2.598zm-9.056 2.849l-1.065-3.302-1.065 3.314c.31.163.706.276 1.053.276.359 0 .768-.125 1.077-.288zm.496 1.544c-.483.188-1.016.351-1.573.351-.546 0-1.078-.163-1.549-.339l-.62 1.896h-1.969l3.146-8.787h2.007l3.147 8.787h-1.982zm-7.57-3.29c.72 0 1.078-.501 1.078-1.003 0-.49-.346-.98-1.077-.98H95.46v1.996zm.026-3.589c1.622.025 2.7 1.067 2.7 2.61 0 1.557-1.078 2.6-2.7 2.6H95.46V77.9h-1.858v-8.787zm-8.042 7.19c1.61 0 1.635-1.98 0-1.98h-1.844v1.992zm0-3.588c1.25 0 2.923.553 2.96 2.586 0 2.021-2.006 2.599-2.96 2.599h-3.702v-8.787h5.882v1.607h-4.024v1.995zm-11.42.804c0 1.757.979 2.874 2.242 2.874 1.276 0 2.255-1.117 2.255-2.874 0-1.745-.979-2.9-2.255-2.9-1.263 0-2.242 1.155-2.242 2.9zm6.355 0c0 2.824-1.846 4.481-4.113 4.481-2.267 0-4.1-1.657-4.1-4.481s1.833-4.506 4.1-4.506c2.267 0 4.113 1.682 4.113 4.506z"/><path id="lbgf" d="M157 88.496h-.9v-7.38h-1.877v7.368h-3.253v-7.368h-1.877v9.016h6.306V92H157zm-9.418-7.38h-1.874l-3.248 5.751v-5.751h-1.874v9.006h1.874l3.248-5.7v5.7h1.874zm-8.36 0h-1.876v3.693h-3.24v-3.693h-1.877v9.006h1.877v-3.667h3.24v3.667h1.876zm-12.072 5.78c-.35 0-.75-.116-1.064-.284l1.076-3.41 1.076 3.397c-.313.168-.725.297-1.088.297zm2.202 3.226h2.001l-3.177-9.006h-2.027l-3.178 9.006h1.99l.625-1.942c.475.18 1.013.347 1.564.347.563 0 1.1-.167 1.589-.36zm-10.109-5.31v-2.047h1.852c.738 0 1.088.502 1.088 1.004 0 .516-.363 1.03-1.088 1.03zm-1.876-3.696v9.006h1.876v-3.667h1.877c1.639 0 2.727-1.067 2.727-2.663 0-1.582-1.088-2.65-2.727-2.676zm-1.324 1.647v-1.647h-5.908v9.006h1.874v-7.36zM101.065 81c-1.701 0-2.727 1.056-2.727 1.056l.688 1.533s.838-.94 1.914-.94c.538 0 1.051.412 1.051 1.043s-.3 1.043-1.05 1.043h-1.527v1.649h1.526c.676.013 1.126.49 1.126 1.21 0 .593-.45.993-1.126.993-1.076 0-1.914-.915-1.914-.915l-.688 1.52s1.026 1.043 2.727 1.043c1.602 0 2.878-1.365 2.878-2.795 0-.682-.288-1.39-.976-1.97.638-.541.9-1.173.9-1.804 0-1.365-1.263-2.666-2.802-2.666zM96.7 82.763v-1.647h-5.592v9.006h5.73v-1.647h-3.854v-2.02h2.778V84.81h-2.778v-2.046zm-11.822 5.733v-2.035h1.862c1.651 0 1.626 2.023 0 2.023zm0-3.687v-2.046h4.063v-1.647H83v9.006h3.739c.963 0 2.99-.592 2.99-2.663-.038-2.084-1.727-2.65-2.99-2.65z"/><path id="lbgg" d="M147.451 97.277v-1.704h-.761c-.309 0-.549.074-.72.22-.17.146-.257.353-.257.619s.088.477.262.632c.174.154.408.233.703.233zm.549 2.47h-.549V97.76h-.682a.583.583 0 0 0-.344.106c-.1.07-.206.229-.32.473l-.587 1.407h-.653l.711-1.56c.046-.101.116-.21.21-.324a.795.795 0 0 1 .333-.242v-.013c-.312-.067-.554-.21-.727-.427a1.224 1.224 0 0 1-.26-.788c0-.396.139-.715.417-.954.278-.24.641-.36 1.092-.36H148zm-4.06 0h-.55v-3.373c0-.304.01-.517.033-.64h-.02a1.535 1.535 0 0 1-.15.292l-2.41 3.72h-.68V95.08h.549v3.288c0 .35-.01.58-.026.686h.012c.048-.095.11-.2.183-.312l2.353-3.662h.705zm-4.619-4.174h-1.352v4.174h-.549v-4.174h-1.349v-.494h3.25zm-4.12 4.174h-.547v-3.373c0-.304.01-.517.033-.64h-.02a1.536 1.536 0 0 1-.15.292l-2.404 3.72h-.678V95.08h.547v3.288c0 .35-.008.58-.025.686h.012c.048-.095.11-.2.183-.312l2.346-3.662h.704zm-7.157-2.175v1.68h.745c.322 0 .572-.076.749-.228.178-.152.266-.36.266-.625 0-.551-.376-.827-1.13-.827zm0-1.999v1.508h.562c.3 0 .536-.072.709-.217.172-.144.258-.347.258-.61 0-.454-.3-.68-.9-.68zm-.549 4.174v-4.668h1.333c.404 0 .727.099.963.295a.959.959 0 0 1 .357.773c0 .264-.073.494-.217.69a1.157 1.157 0 0 1-.594.416v.014c.316.036.569.155.758.355.19.201.285.463.285.784 0 .398-.144.722-.432.97-.287.247-.65.37-1.088.37zm-4.019-.196v-.592c.366.267.78.4 1.244.4.338 0 .607-.081.806-.243a.808.808 0 0 0 .3-.658c0-.6-.408-.9-1.22-.9h-.487v-.451h.449c.345 0 .614-.075.805-.225.19-.15.285-.36.285-.634a.72.72 0 0 0-.236-.564c-.159-.14-.376-.212-.653-.212-.391 0-.772.124-1.143.368v-.553c.345-.191.74-.287 1.19-.287.444 0 .793.106 1.048.317.254.21.383.486.383.83 0 .605-.297.986-.889 1.145v.014c.322.036.578.156.767.36.19.205.284.457.284.758 0 .428-.152.768-.457 1.022-.304.253-.721.378-1.25.378-.53 0-.938-.09-1.226-.273zm-1.768-1.604l-.74-1.99a1.92 1.92 0 0 1-.071-.311h-.014a1.74 1.74 0 0 1-.075.312l-.734 1.989zm1.274 1.8h-.607l-.497-1.31h-1.986l-.468 1.31h-.61l1.797-4.668h.568zm-6.406-4.174v1.925h.575c.378 0 .668-.087.866-.26.2-.173.3-.42.3-.735 0-.62-.367-.93-1.098-.93zm0 2.41v1.764h-.549v-4.668h1.287c.5 0 .888.121 1.165.364.275.244.413.586.413 1.03 0 .442-.153.804-.46 1.086-.305.282-.719.423-1.239.423zm-7-2.41v1.925h.575c.378 0 .668-.087.866-.26.2-.173.3-.42.3-.735 0-.62-.367-.93-1.098-.93zm0 2.41v1.764h-.549v-4.668h1.287c.5 0 .888.121 1.165.364.275.244.412.586.412 1.03 0 .442-.152.804-.459 1.086-.305.282-.719.423-1.239.423zm-1.39-2.41h-1.353v4.174h-.548v-4.174h-1.35v-.494h3.25zm-4.105 4.174h-.548v-2.13h-2.424v2.13h-.549v-4.668h.549v2.048h2.424v-2.048h.548zm-4.528 0H97.07v-4.668h2.378v.494h-1.83v1.554h1.693v.49h-1.693v1.635h1.934zM96.149 101h-.508v-1.253H92v-4.668h.549v4.173h2.423V95.08h.549v4.173h.628z"/></defs><symbol id="lbg-logo" viewBox="0 0 129 53"><g><g transform="translate(-55 -55)"><g><use fill="#728287" xlink:href="#lbga"/></g><g><use fill="#d82237" xlink:href="#lbgb"/></g><g><use fill="#d82237" xlink:href="#lbgc"/></g><g><use fill="#728287" xlink:href="#lbgd"/></g><g><use fill="#00668a" xlink:href="#lbge"/></g><g><use fill="#00668a" xlink:href="#lbgf"/></g><g><use fill="#00668a" xlink:href="#lbgg"/></g></g></g></symbol></svg>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top" aria-label="Образование без границ — на главную">
+      <svg class="logo-svg" viewBox="0 0 129 53" aria-hidden="true"><use href="#lbg-logo" xlink:href="#lbg-logo"/></svg>
+      <span class="brand-city" aria-hidden="true">Уфа</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Разделы">
+      <a href="#napravleniya">Направления</a>
+      <a href="#fizteh">Школа Физтеха</a>
+      <a href="#prepodavateli">Преподаватели</a>
+      <a href="#otzyvy">Отзывы</a>
+      <a href="#foto">Фото</a>
+      <a href="#zapis">Контакты</a>
+    </nav>
+    <div class="top-cta">
+      <a class="top-phone" href="tel:+73472948330">+7 (347) 294-83-30</a>
+      <a class="btn" href="#zapis">Записаться</a>
+      <button class="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+      </button>
+    </div>
+    <span class="progress" aria-hidden="true"></span>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ГЕРОЙ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="chip-live"><span class="dot" aria-hidden="true"></span>Идёт набор на 2026/27 учебный год</span>
+          <h1>Математика и&nbsp;физика, которые <span class="scribble">хочется<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 12 C 50 4, 120 3, 196 9"/><path pathLength="1" d="M34 17 C 84 12, 130 12, 172 15"/></svg></span> решать</h1>
+          <p class="lead">Центр развития в&nbsp;Уфе с&nbsp;2013 года. Олимпиадная подготовка, ОГЭ и&nbsp;ЕГЭ, «Школа Физтеха» вместе с&nbsp;МФТИ&nbsp;— для учеников 2–11 классов.</p>
+          <div class="hero-btns">
+            <a class="btn" href="#zapis">Записаться на собеседование
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--ghost" href="#napravleniya">Подобрать программу</a>
+          </div>
+          <ul class="trust">
+            <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.8 2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg><span><b>5,0</b> на 2ГИС</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg><span><b>80%</b> выпускников — на бюджете</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-60 12 12)"/></svg><span>Партнёр <b>МФТИ</b> и&nbsp;<b>НИУ ВШЭ</b></span></li>
+          </ul>
+        </div>
+
+        <div class="hero-art">
+          <span class="doodle" style="top:-6px;left:-2%;font-size:2.6rem;--r0:-8deg" aria-hidden="true">π</span>
+          <span class="doodle" style="top:44%;left:-7%;font-size:1.6rem;--r0:6deg;animation-delay:-2s" aria-hidden="true">F = ma</span>
+          <span class="doodle" style="bottom:6px;left:4%;width:46px;--r0:0deg;animation-delay:-4s" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="24" cy="24" r="3" fill="currentColor"/><ellipse cx="24" cy="24" rx="20" ry="8"/><ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="20" ry="8" transform="rotate(-60 24 24)"/></svg></span>
+
+          <figure class="polaroid hero-photo" data-photo="hero" data-alt="Занятие в центре «Образование без границ»">
+            <span class="tape" aria-hidden="true"></span>
+            <div class="ph">
+              <svg class="board" viewBox="0 0 400 300" aria-hidden="true">
+                <rect class="s" x="26" y="24" width="348" height="214" rx="10"/>
+                <path class="s" d="M70 196 V 86 L 196 196 Z"/>
+                <path class="s" d="M70 178 h 18 v 18"/>
+                <text x="44" y="146" font-size="30">a</text>
+                <text x="124" y="230" font-size="30">b</text>
+                <text x="140" y="132" font-size="30">c</text>
+                <text x="214" y="104" font-size="36">a² + b² = c²</text>
+                <text class="tp" x="232" y="168" font-size="34">c = ?</text>
+                <path class="p" d="M222 178 C 260 172, 300 172, 330 178"/>
+                <path class="s" d="M30 262 H 370"/>
+                <rect class="s" x="300" y="248" width="40" height="10" rx="3"/>
+              </svg>
+            </div>
+            <figcaption>Квест «Физика без границ»</figcaption>
+          </figure>
+
+          <a class="stamp" href="https://2gis.ru/ufa/geo/70000001059800801" target="_blank" rel="noopener" aria-label="Оценка 5,0 на 2ГИС">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <path class="ring" pathLength="1" d="M66 12 C 98 12, 112 38, 108 64 C 104 94, 78 110, 52 106 C 24 102, 8 80, 12 54 C 16 28, 40 12, 74 16"/>
+              <text x="60" y="84" text-anchor="middle" font-size="72">5</text>
+            </svg>
+            <span>на 2ГИС</span>
+          </a>
+
+          <div class="sticky">
+            <b>Задача дня</b>
+            Поезд длиной 200&nbsp;м проезжает мост длиной 400&nbsp;м за&nbsp;30&nbsp;секунд. Какова его скорость?
+            <a href="#zadacha">решить внизу ↓</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats rise">
+        <div class="stat"><b>с 2013</b><span>года готовим школьников Уфы</span></div>
+        <div class="stat"><b>80%</b><span>выпускников учатся на бюджете ведущих вузов</span></div>
+        <div class="stat"><b>1000+</b><span>участников очного этапа «Высшей пробы» на нашей площадке</span></div>
+        <div class="stat"><b>8.0</b><span>лучший балл IELTS у наших учеников</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- БЕГУЩАЯ СТРОКА -->
+  <div class="ticker" aria-label="Предметы">
+    <div class="ticker-track">
+      <ul>
+        <li>олимпиадная математика</li><li>физика</li><li>русский язык</li><li>английский</li><li>информатика</li><li>обществознание</li><li>биология</li><li>ОГЭ и ЕГЭ</li><li>IELTS</li><li>турниры и квесты</li>
+      </ul>
+      <ul aria-hidden="true">
+        <li>олимпиадная математика</li><li>физика</li><li>русский язык</li><li>английский</li><li>информатика</li><li>обществознание</li><li>биология</li><li>ОГЭ и ЕГЭ</li><li>IELTS</li><li>турниры и квесты</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- НАПРАВЛЕНИЯ -->
+  <section class="sec" id="napravleniya">
+    <div class="wrap">
+      <div class="prog-head">
+        <div class="sec-head">
+          <span class="eyebrow">для 2–11 классов</span>
+          <h2>Программы по&nbsp;возрасту и&nbsp;цели</h2>
+          <p class="lead">Выберите класс ребёнка&nbsp;— подсветим подходящие программы.</p>
+        </div>
+        <div class="filter" role="group" aria-label="Класс ребёнка">
+          <button class="chipbtn" type="button" data-g="all" aria-pressed="true">Все</button>
+          <button class="chipbtn" type="button" data-g="2-4" aria-pressed="false">2–4 класс</button>
+          <button class="chipbtn" type="button" data-g="5-6" aria-pressed="false">5–6</button>
+          <button class="chipbtn" type="button" data-g="7-8" aria-pressed="false">7–8</button>
+          <button class="chipbtn" type="button" data-g="9-11" aria-pressed="false">9–11</button>
+        </div>
+      </div>
+
+      <div class="cards rise">
+        <article class="card" data-grades="2 3 4">
+          <div class="card-top">
+            <div class="grade"><span class="mark">2–4</span><small>класс</small></div>
+            <span class="tag">игровой формат</span>
+          </div>
+          <h3>Всезнайки</h3>
+          <p>Развивающие занятия в формате тренировки. Дети выходят за рамки школьной программы и учатся красиво оформлять решения.</p>
+          <ul class="ticks">
+            <li><span><b>Математика</b> — устный счёт, олимпиадные задачи, головоломки. 90 минут раз в неделю</span></li>
+            <li><span><b>Русский язык</b> — лингвистическая логика и олимпиадные задания. 90 минут раз в неделю</span></li>
+            <li><span><b>Английский</b> — правила чтения и живая речь. 40 минут два раза в неделю</span></li>
+            <li><span>Каждый модуль завершают мини-турнир и спектакль на английском</span></li>
+          </ul>
+          <p class="small-note">Приём — после собеседования и теста по математике.</p>
+          <div class="card-actions"><a class="link-btn" href="#zapis" data-prog="vseznayki">Записаться →</a></div>
+        </article>
+
+        <article class="card" data-grades="5 6">
+          <div class="card-top">
+            <div class="grade"><span class="mark">5–6</span><small>класс</small></div>
+            <span class="tag">очно</span>
+          </div>
+          <h3>Олимпиадная математика</h3>
+          <p>Для тех, кому на школьной математике уже тесно. Нестандартные задачи, логика и подготовка к олимпиадам и турнирам.</p>
+          <ul class="ticks">
+            <li><span>Задачи повышенной сложности вместо типовых примеров</span></li>
+            <li><span>Подготовка к школьным и вузовским олимпиадам</span></li>
+            <li><span>Ведут наставники призёров олимпиад</span></li>
+          </ul>
+          <div class="card-actions"><a class="link-btn" href="#zapis" data-prog="olymp">Записаться →</a></div>
+        </article>
+
+        <article class="card" data-grades="7 8">
+          <div class="card-top">
+            <div class="grade"><span class="mark">7–8</span><small>класс</small></div>
+            <span class="tag">очно</span>
+          </div>
+          <h3>Физмат класс</h3>
+          <p>Математика и физика по школьной программе без пробелов: разбираем то, что осталось непонятным, и добавляем задачи посложнее.</p>
+          <ul class="ticks">
+            <li><span>На каждом занятии — задача повышенной сложности</span></li>
+            <li><span>Лабораторные работы по физике</span></li>
+            <li><span>Контрольные и зачёты с обязательной работой над ошибками</span></li>
+          </ul>
+          <div class="card-actions"><a class="link-btn" href="#zapis" data-prog="fizmat">Записаться →</a></div>
+        </article>
+
+        <article class="card" data-grades="7 8 9 10 11">
+          <div class="card-top">
+            <div class="grade"><span class="mark">7–11</span><small>класс</small></div>
+            <span class="tag tag--pen">проект МФТИ</span>
+          </div>
+          <h3>Школа Физтеха</h3>
+          <p>Физика и математика для тех, кто целится в сильный технический вуз и олимпиады. Отбор — по входному тестированию.</p>
+          <ul class="ticks">
+            <li><span>Лекции и практикумы преподавателей МФТИ</span></li>
+            <li><span>Видеоуроки и контрольные на платформе МФТИ</span></li>
+            <li><span>Тьюторы — студенты МФТИ и МГУ</span></li>
+          </ul>
+          <div class="card-actions"><a class="link-btn" href="#zapis" data-prog="fizteh">Записаться →</a><a class="link-soft" href="#fizteh">О программе</a></div>
+        </article>
+
+        <article class="card" data-grades="9 10 11">
+          <div class="card-top">
+            <div class="grade"><span class="mark">9–11</span><small>класс</small></div>
+            <span class="tag">ОГЭ · ЕГЭ · IELTS</span>
+          </div>
+          <h3>Подготовка к&nbsp;экзаменам</h3>
+          <p>Русский язык, математика, физика, обществознание, английский. Среди преподавателей — эксперты комиссий ОГЭ и ЕГЭ.</p>
+          <ul class="ticks">
+            <li><span>Помогаем выбрать предметы и вуз</span></li>
+            <li><span>80% выпускников учатся на бюджете ведущих вузов</span></li>
+            <li><span>Старшеклассники готовятся к IELTS — лучший результат 8.0</span></li>
+          </ul>
+          <div class="card-actions"><a class="link-btn" href="#zapis" data-prog="exam">Записаться →</a></div>
+        </article>
+
+        <article class="card card--cta">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <span class="eyebrow">не знаете, что выбрать?</span>
+            <h3>Подберём программу на&nbsp;собеседовании</h3>
+            <p>Расскажите, в каком классе ребёнок и что ему интересно. Предложим направление, группу и удобное время.</p>
+          </div>
+          <div class="card-actions"><a class="btn btn--note" href="#zapis" data-prog="help">Подобрать программу</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ШКОЛА ФИЗТЕХА -->
+  <section class="sec band" id="fizteh">
+    <div class="wrap fz-grid">
+      <div>
+        <div class="sec-head" style="margin-bottom:0">
+          <span class="eyebrow">проект МФТИ · в Башкортостане с 2019 года</span>
+          <h2>Школа Физтеха</h2>
+          <p class="lead">Программа для учеников 7–11 классов, которые увлечены математикой и физикой и готовятся к поступлению в ведущий технический вуз и к олимпиадам. Центр ведёт её вместе с МФТИ.</p>
+        </div>
+        <ul class="fz-list">
+          <li><b>Физика</b><span>2 академических часа в неделю очно, лекции и практикумы преподавателей МФТИ, видеоуроки и контрольные в личном кабинете на платформе МФТИ</span></li>
+          <li><b>Математика</b><span>2 академических часа в неделю с преподавателями центра</span></li>
+          <li><b>Тьюторы</b><span>Студенты МФТИ и МГУ сопровождают учеников</span></li>
+          <li><b>Олимпиады</b><span>Консультации по участию и подготовке. Онлайн-курс олимпиадной физики ведёт заслуженный учитель России Лилия Альфитовна Адеева</span></li>
+          <li><b>Поддержка</b><span>Профориентация и психологическое сопровождение</span></li>
+        </ul>
+      </div>
+      <div class="fz-side rise">
+        <div class="chalkboard" aria-hidden="true">
+          <svg viewBox="0 0 300 250">
+            <path class="chalk" d="M40 24 H 260"/>
+            <path class="chalk" d="M60 24 l -10 -12 M90 24 l -10 -12 M120 24 l -10 -12 M180 24 l -10 -12 M210 24 l -10 -12 M240 24 l -10 -12"/>
+            <path class="chalk-dash" d="M86 178 A 158 158 0 0 0 214 178"/>
+            <path class="chalk-dash" d="M150 24 V 196"/>
+            <g class="pend">
+              <path class="chalk" d="M150 24 V 178"/>
+              <circle class="bob" cx="150" cy="194" r="17"/>
+            </g>
+            <circle cx="150" cy="24" r="4" fill="var(--band-fg)"/>
+            <text x="158" y="110" font-size="24">l</text>
+            <text class="accent" x="150" y="240" font-size="30" text-anchor="middle">T = 2π√(l/g)</text>
+          </svg>
+        </div>
+        <div class="admit">
+          <h3>Отбор по&nbsp;тестированию</h3>
+          <p>Входной тест — задачи повышенной сложности по математике и физике. Для 7 класса есть облегчённая программа: физика и математика по 2 часа в неделю, видеоуроки и консультации по олимпиадам.</p>
+          <a class="btn btn--note" href="#zapis" data-prog="fizteh">Записаться на тестирование</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КАК ПОПАСТЬ -->
+  <section class="sec" id="kak">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">четыре шага</span>
+        <h2>Как попасть на&nbsp;занятия</h2>
+      </div>
+      <ol class="steps rise">
+        <li class="step">
+          <span class="step-n"><svg viewBox="0 0 62 62" aria-hidden="true"><path d="M34 5 C 52 6, 58 22, 56 34 C 53 50, 40 58, 27 56 C 13 54, 5 42, 7 28 C 9 15, 20 6, 40 8"/></svg>1</span>
+          <h3>Заявка</h3>
+          <p>Оставьте контакты на сайте или позвоните по номеру +7 (347) 294-83-30.</p>
+        </li>
+        <li class="step">
+          <span class="step-n"><svg viewBox="0 0 62 62" aria-hidden="true"><path d="M30 6 C 48 4, 58 20, 56 33 C 54 48, 42 57, 28 56 C 14 55, 4 44, 6 29 C 8 16, 19 7, 37 7"/></svg>2</span>
+          <h3>Собеседование и&nbsp;тест</h3>
+          <p>Знакомимся с ребёнком и родителями, проверяем уровень знаний. Так поступают во «Всезнайки» и «Школу Физтеха».</p>
+        </li>
+        <li class="step">
+          <span class="step-n"><svg viewBox="0 0 62 62" aria-hidden="true"><path d="M33 5 C 51 7, 59 21, 56 35 C 53 50, 39 58, 26 55 C 12 52, 4 40, 7 27 C 10 14, 22 6, 41 9"/></svg>3</span>
+          <h3>Группа по&nbsp;уровню</h3>
+          <p>Подбираем программу и расписание. Если группа окажется не по силам или слишком лёгкой, преподаватель порекомендует другую.</p>
+        </li>
+        <li class="step">
+          <span class="step-n"><svg viewBox="0 0 62 62" aria-hidden="true"><path d="M31 6 C 49 5, 58 21, 56 34 C 54 49, 41 57, 27 56 C 13 54, 5 43, 6 29 C 8 15, 20 7, 39 8"/></svg>4</span>
+          <h3>Родители в&nbsp;курсе</h3>
+          <p>Проводим онлайн-собрания для родителей: рассказываем об успехах ребёнка и планах на следующий модуль.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ЗАДАЧА -->
+  <section class="sec" id="zadacha" style="padding-top:0">
+    <div class="wrap task-grid">
+      <div class="sec-head">
+        <span class="eyebrow">разминка для ума</span>
+        <h2>Решите задачу вместе с&nbsp;ребёнком</h2>
+        <p class="lead">Три короткие задачи — по одной на каждый возраст. Считать почти не нужно, а вот подумать придётся.</p>
+      </div>
+      <div class="sheet rise">
+        <div class="tabs" role="tablist" aria-label="Уровень задачи">
+          <button class="chipbtn" type="button" role="tab" id="tab-a" data-task="a" aria-selected="true">2–4 класс</button>
+          <button class="chipbtn" type="button" role="tab" id="tab-b" data-task="b" aria-selected="false">5–6 класс</button>
+          <button class="chipbtn" type="button" role="tab" id="tab-c" data-task="c" aria-selected="false">7–8, физика</button>
+        </div>
+        <p class="problem" id="task-text" aria-live="polite">У Маши три брата и две сестры. Сколько сестёр у её брата Пети?</p>
+        <form class="answer-row" id="task-form" novalidate>
+          <label for="task-input" class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Ваш ответ</label>
+          <input id="task-input" type="text" inputmode="decimal" autocomplete="off" placeholder="Ваш ответ">
+          <button class="btn" type="submit">Проверить</button>
+        </form>
+        <p class="feedback" id="task-fb" aria-live="polite"></p>
+        <button class="text-btn" type="button" id="task-show">Показать решение</button>
+        <p class="solution" id="task-sol" hidden></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПРЕПОДАВАТЕЛИ -->
+  <section class="sec" id="prepodavateli" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">12 преподавателей</span>
+        <h2>Учат те, кто сам готовит победителей олимпиад</h2>
+        <p class="lead">Заслуженные учителя, кандидаты наук, эксперты ОГЭ и&nbsp;ЕГЭ.</p>
+      </div>
+      <div class="teachers rise">
+        <article class="t-card">
+          <div class="avatar" data-photo="sakhanevich" data-alt="Михаил Владимирович Саханевич">x²</div>
+          <div class="t-body">
+            <div class="t-name">Саханевич<span>Михаил Владимирович</span></div>
+            <div class="t-subj">математика · Физтех</div>
+            <p>Заслуженный учитель РБ и РФ, «Учитель года», победитель конкурса «Лучший учитель России». Эксперт ЕГЭ, готовил победителей Всероссийской олимпиады.</p>
+          </div>
+        </article>
+        <article class="t-card">
+          <div class="avatar" data-photo="sitdikova" data-alt="Марина Германовна Ситдикова">Аа</div>
+          <div class="t-body">
+            <div class="t-name">Ситдикова<span>Марина Германовна</span></div>
+            <div class="t-subj">русский язык · ОГЭ и ЕГЭ</div>
+            <p>Кандидат филологических наук, преподаёт с 1997 года. Сертифицированный эксперт ЕГЭ, проверяет экзаменационные работы ЕГЭ и ОГЭ.</p>
+          </div>
+        </article>
+        <article class="t-card">
+          <div class="avatar" data-photo="adeeva" data-alt="Лилия Альфитовна Адеева">λ</div>
+          <div class="t-body">
+            <div class="t-name">Адеева<span>Лилия Альфитовна</span></div>
+            <div class="t-subj">физика · Физтех, онлайн</div>
+            <p>Заслуженный учитель России и РБ, преподаёт в физико-математическом лицее Санкт-Петербурга. Среди учеников — победители олимпиад и стобалльники ЕГЭ.</p>
+          </div>
+        </article>
+        <article class="t-card">
+          <div class="avatar" data-photo="nusratullin" data-alt="Эдуард Марсович Нусратуллин">∑</div>
+          <div class="t-body">
+            <div class="t-name">Нусратуллин<span>Эдуард Марсович</span></div>
+            <div class="t-subj">олимпиадная математика</div>
+            <p>Кандидат технических наук, учитель математики в одном из ведущих лицеев Уфы, отличник образования РБ. Готовит призёров вузовских олимпиад.</p>
+          </div>
+        </article>
+        <article class="t-card">
+          <div class="avatar" data-photo="simakin" data-alt="Станислав Викторович Симакин">F</div>
+          <div class="t-body">
+            <div class="t-name">Симакин<span>Станислав Викторович</span></div>
+            <div class="t-subj">физика · Физтех</div>
+            <p>Преподаёт физику и математику, ведёт интеллектуальные клубы для школьников. Наставник призёров и победителей олимпиад.</p>
+          </div>
+        </article>
+        <article class="t-card">
+          <div class="avatar" data-photo="astafiev" data-alt="Сергей Васильевич Астафьев">{ }</div>
+          <div class="t-body">
+            <div class="t-name">Астафьев<span>Сергей Васильевич</span></div>
+            <div class="t-subj">информатика</div>
+            <p>Почётный учитель РФ, отличник образования РБ. Тренирует команды по программированию и готовит призёров олимпиад.</p>
+          </div>
+        </article>
+        <article class="t-card">
+          <div class="avatar" data-photo="kolesnikova" data-alt="Элен Владимировна Колесникова">§</div>
+          <div class="t-body">
+            <div class="t-name">Колесникова<span>Элен Владимировна</span></div>
+            <div class="t-subj">история и обществознание</div>
+            <p>Отличник образования РБ, старший эксперт ОГЭ и ЕГЭ по обществознанию.</p>
+          </div>
+        </article>
+        <article class="t-card">
+          <div class="avatar" data-photo="khalitova" data-alt="Эльза Хафизовна Халитова" style="font-size:1.5rem">ДНК</div>
+          <div class="t-body">
+            <div class="t-name">Халитова<span>Эльза Хафизовна</span></div>
+            <div class="t-subj">биология</div>
+            <p>Кандидат биологических наук, наставник призёров и победителей олимпиад.</p>
+          </div>
+        </article>
+      </div>
+      <div class="director rise">
+        <div class="avatar" data-photo="musina" data-alt="Лилия Миннегаяновна Мусина" style="width:64px;height:64px;font-size:1.6rem">ЛМ</div>
+        <p style="flex:1 1 320px"><b>Руководитель центра — Лилия Миннегаяновна Мусина.</b> Родители в отзывах часто благодарят её за подбор преподавателей и помощь с выбором вуза.</p>
+        <a class="link-btn" href="https://librastudy.ru/about/teachers/" target="_blank" rel="noopener">Все преподаватели →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВЫ И РЕЗУЛЬТАТЫ -->
+  <section class="sec" id="otzyvy" style="padding-top:0">
+    <div class="wrap">
+      <div class="rev-head">
+        <div class="sec-head">
+          <span class="eyebrow">результаты учеников</span>
+          <h2>Баллы, олимпиады, бюджет</h2>
+          <p class="lead">Коротко о том, чего добились наши ученики, — по отзывам родителей и выпускников.</p>
+        </div>
+        <a class="rating" href="https://2gis.ru/ufa/geo/70000001059800801" target="_blank" rel="noopener">
+          <svg viewBox="0 0 120 120" aria-hidden="true"><path class="ring" d="M66 12 C 98 12, 112 38, 108 64 C 104 94, 78 110, 52 106 C 24 102, 8 80, 12 54 C 16 28, 40 12, 74 16"/><text x="60" y="84" text-anchor="middle" font-size="72">5</text></svg>
+          <span><b>5,0 на 2ГИС</b><span>Смотреть оценки и отзывы →</span></span>
+        </a>
+      </div>
+
+      <blockquote class="quote rise">
+        <span class="quote-mark" aria-hidden="true">«</span>
+        <p>…за знания, за качество, структурированность, за четкость и уважительное отношение»</p>
+        <footer>Ирина Шиляева, отзыв на сайте центра, август 2026</footer>
+      </blockquote>
+
+      <div class="results rise">
+        <article class="res">
+          <span class="res-subj">ЕГЭ · русский язык</span>
+          <div class="res-big">81 балл</div>
+          <p>Русский был для сына самым тревожным экзаменом. После подготовки у Марины Германовны — 81 балл.</p>
+          <cite>по отзыву Ираиды, август 2025</cite>
+        </article>
+        <article class="res">
+          <span class="res-subj">поступление</span>
+          <div class="res-big">МАИ, бюджет</div>
+          <p>Сын поступил на бюджет в Московский авиационный институт. Семья благодарит руководителя центра и преподавателей.</p>
+          <cite>по отзыву Иды, август 2025</cite>
+        </article>
+        <article class="res">
+          <span class="res-subj">ЕГЭ · поступление</span>
+          <div class="res-big">СПбГУ, бюджет</div>
+          <p>Пришла в центр уже в 11 классе, успела подготовиться к ЕГЭ и поступила на бюджет в СПбГУ.</p>
+          <cite>по отзыву Элины, август 2024</cite>
+        </article>
+        <article class="res">
+          <span class="res-subj">ЕГЭ · обществознание</span>
+          <div class="res-big">87 баллов и МГИМО</div>
+          <p>Высокий балл по обществознанию и поступление в МГИМО. Отдельно отмечает продуманную структуру курса.</p>
+          <cite>по отзыву Софии, август 2019</cite>
+        </article>
+        <article class="res">
+          <span class="res-subj">вуз и лицей</span>
+          <div class="res-big">ВШЭ и Физтех-лицей</div>
+          <p>Старший сын после подготовки по русскому поступил на бюджет в ВШЭ, младший после занятий физикой перешёл в Физтех-лицей.</p>
+          <cite>по отзыву Наили Абдулгужиной, август 2023</cite>
+        </article>
+        <article class="res">
+          <span class="res-subj">Школа Физтеха</span>
+          <div class="res-big">Лицей №153</div>
+          <p>Подтянул физику и математику, начал побеждать на олимпиадах и поступил в лицей №153.</p>
+          <cite>по отзыву Н. С. Ахмедзяновой, сентябрь 2022</cite>
+        </article>
+      </div>
+      <div class="rev-links">
+        <a class="btn btn--ghost" href="https://librastudy.ru/reviews/" target="_blank" rel="noopener">Все отзывы на сайте</a>
+        <a class="btn btn--ghost" href="https://2gis.ru/ufa/geo/70000001059800801" target="_blank" rel="noopener">Отзывы на 2ГИС</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФОТО -->
+  <section class="sec" id="foto" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">из фотоархива центра</span>
+        <h2>Турниры, квесты и&nbsp;летние школы</h2>
+        <p class="lead">Учёба в центре — это не только занятия за партой.</p>
+      </div>
+      <div class="gallery rise">
+        <figure class="polaroid g-item" data-photo="g1" data-alt="Турнир по экспериментальной физике">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 6h10M21 6v12L10 38a4 4 0 0 0 3.5 6h21A4 4 0 0 0 38 38L27 18V6"/><path d="M15 31h18"/></svg></div>
+          <figcaption>Турнир по экспериментальной физике</figcaption>
+        </figure>
+        <figure class="polaroid g-item" data-photo="g2" data-alt="Интеллектуальное шоу «Физика без границ»">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="5" width="12" height="22" rx="6"/><path d="M12 22a12 12 0 0 0 24 0M24 34v8M16 42h16"/></svg></div>
+          <figcaption>Шоу «Физика без границ»</figcaption>
+        </figure>
+        <figure class="polaroid g-item" data-photo="g3" data-alt="Физико-математический квест «Наука для школьников»">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 12l12-5 12 5 12-5v29l-12 5-12-5-12 5z"/><path d="M18 7v29M30 12v29"/></svg></div>
+          <figcaption>Квест «Наука для школьников»</figcaption>
+        </figure>
+        <figure class="polaroid g-item" data-photo="g4" data-alt="Летняя многопрофильная школа">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="24" cy="24" r="8"/><path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4"/></svg></div>
+          <figcaption>Летняя многопрофильная школа</figcaption>
+        </figure>
+        <figure class="polaroid g-item" data-photo="g5" data-alt="Летний интенсив с преподавателем МФТИ">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="24" cy="24" r="3" fill="currentColor"/><ellipse cx="24" cy="24" rx="19" ry="7.5"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="7.5" transform="rotate(-60 24 24)"/></svg></div>
+          <figcaption>Интенсив с преподавателем МФТИ</figcaption>
+        </figure>
+        <figure class="polaroid g-item" data-photo="g6" data-alt="Ученики центра с наградами">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M8 14h12M14 8v12M28 14h12M10 36h12M28 30l10 10M38 30L28 40"/></svg></div>
+          <figcaption>Наши победы</figcaption>
+        </figure>
+        <figure class="polaroid g-item" data-photo="g7" data-alt="Дни с Вышкой в Уфе">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18l20-9 20 9-20 9z"/><path d="M12 22v10c0 3 6 6 12 6s12-3 12-6V22M44 18v12"/></svg></div>
+          <figcaption>Дни с Вышкой в Уфе</figcaption>
+        </figure>
+        <figure class="polaroid g-item" data-photo="g8" data-alt="Обычный учебный день в центре">
+          <span class="tape" aria-hidden="true"></span>
+          <div class="ph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10c6-2 12-2 18 2 6-4 12-4 18-2v28c-6-2-12-2-18 2-6-4-12-4-18-2z"/><path d="M24 12v28"/></svg></div>
+          <figcaption>Наши будни</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПАРТНЁРЫ -->
+  <section class="sec" id="partnery" style="padding-top:0">
+    <div class="wrap partners">
+      <div class="sec-head">
+        <span class="eyebrow">с кем работаем</span>
+        <h2>Партнёры центра</h2>
+        <p class="lead">Ученики занимаются по программам ведущих вузов и встречаются с их преподавателями в Уфе.</p>
+      </div>
+      <ul class="p-list rise">
+        <li><b>МФТИ</b><span>С 2019 года ведём «Школу Физтеха» в Башкортостане. Семинары и интенсивы преподавателей МФТИ.</span></li>
+        <li><b>НИУ ВШЭ</b><span>С 2015 года — региональный центр довузовской подготовки и площадка олимпиады «Высшая проба».</span></li>
+        <li><b>МГИМО</b><span>С 2017 года — Международная школа юного дипломата.</span></li>
+        <li><b>Национальная библиотека им.&nbsp;А.-З.&nbsp;Валиди</b><span>Просветительские проекты для школьников и родителей.</span></li>
+        <li><b>Университетская гимназия МГУ</b><span>Совместные проекты для одарённых школьников.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ЗАПИСЬ -->
+  <section class="sec" id="zapis" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">ул. 8 Марта, 12</span>
+        <h2>Запишитесь на&nbsp;собеседование</h2>
+        <p class="lead">Оставьте контакты — администратор перезвонит, ответит на вопросы и подберёт время для знакомства.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="form-card rise">
+          <form class="form" id="lead" novalidate>
+            <div class="form-row">
+              <div class="field"><label for="f-name">Имя родителя</label><input id="f-name" name="f-name" type="text" autocomplete="name" placeholder="Например, Анна"></div>
+              <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="f-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 900 000-00-00"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="f-grade">Класс ребёнка</label>
+                <select id="f-grade" name="f-grade">
+                  <option value="">Выберите класс</option>
+                  <option>2 класс</option><option>3 класс</option><option>4 класс</option><option>5 класс</option><option>6 класс</option><option>7 класс</option><option>8 класс</option><option>9 класс</option><option>10 класс</option><option>11 класс</option>
+                </select>
+              </div>
+              <div class="field"><label for="f-prog">Направление</label>
+                <select id="f-prog" name="f-prog">
+                  <option value="help">Помогите выбрать</option>
+                  <option value="vseznayki">Всезнайки (2–4 класс)</option>
+                  <option value="olymp">Олимпиадная математика (5–6)</option>
+                  <option value="fizmat">Физмат класс (7–8)</option>
+                  <option value="fizteh">Школа Физтеха (7–11)</option>
+                  <option value="exam">ОГЭ, ЕГЭ, IELTS (9–11)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label for="f-msg">Комментарий <span style="font-weight:400">(необязательно)</span></label><textarea id="f-msg" name="f-msg" placeholder="Что важно знать о ребёнке или удобное время для звонка"></textarea></div>
+            <label class="check" for="f-agree"><input id="f-agree" name="f-agree" type="checkbox"><span>Согласен с <a href="https://librastudy.ru/rules/" target="_blank" rel="noopener">правилами работы с данными пользователей</a></span></label>
+            <p class="form-err" id="f-err" hidden></p>
+            <div><button class="btn" type="submit">Отправить заявку</button></div>
+          </form>
+          <div class="form-ok" id="lead-ok" hidden>
+            <span class="eyebrow">Спасибо, <span data-name></span>!</span>
+            <p>Это демо-версия сайта: в рабочей версии заявка сразу придёт администратору центра. Пока можно позвонить: <b>+7 (347) 294-83-30</b>.</p>
+            <button class="text-btn" type="button" id="lead-again">Заполнить ещё раз</button>
+          </div>
+        </div>
+
+        <aside class="info rise" aria-label="Контакты">
+          <dl>
+            <div><dt>Адрес</dt><dd>Уфа, ул. 8 Марта, 12<br><a href="https://2gis.ru/ufa/geo/70000001059800801" target="_blank" rel="noopener">2ГИС</a> · <a href="https://yandex.ru/maps/?text=%D0%A3%D1%84%D0%B0%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%208%20%D0%9C%D0%B0%D1%80%D1%82%D0%B0%2C%2012" target="_blank" rel="noopener">Яндекс Карты</a></dd></div>
+            <div><dt>Телефоны</dt>
+              <dd>
+                <span class="phone-line"><a href="tel:+73472948330">+7 (347) 294-83-30</a><button class="copy" type="button" data-copy="+7 (347) 294-83-30">Копировать</button></span>
+                <span class="phone-line"><a href="https://wa.me/79872548330" target="_blank" rel="noopener">+7 (987) 254-83-30</a><small>WhatsApp</small><button class="copy" type="button" data-copy="+7 (987) 254-83-30">Копировать</button></span>
+              </dd>
+            </div>
+            <div><dt>Почта</dt><dd><span class="phone-line"><span>info@librastudy.ru</span><button class="copy" type="button" data-copy="info@librastudy.ru">Копировать</button></span></dd></div>
+            <div><dt>Часы работы</dt><dd>Пн–пт 9:00–18:00<br>Сб — по расписанию занятий<br>Вс — выходной</dd></div>
+          </dl>
+          <div class="pills" aria-label="Соцсети">
+            <a href="https://vk.com/club64953898" target="_blank" rel="noopener">ВКонтакте</a>
+            <a href="https://vk.ru/fiztechschool" target="_blank" rel="noopener">Школа Физтеха ВК</a>
+            <a href="https://t.me/obrazovaniebg" target="_blank" rel="noopener">Telegram</a>
+            <a href="https://www.youtube.com/channel/UC82PSJ_Qjo08_cBdpfUN2ew" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://rutube.ru/channel/24851358/" target="_blank" rel="noopener">RuTube</a>
+          </div>
+        </aside>
+      </div>
+      <div class="map rise"><iframe src="https://yandex.ru/map-widget/v1/?ll=55.976347%2C54.735977&amp;z=16&amp;pt=55.976347%2C54.735977%2Cpm2rdm" title="Карта: Уфа, ул. 8 Марта, 12" loading="lazy" allowfullscreen></iframe></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <b>Образование без границ</b>
+        <p>АНО ДО «Центр развития „Образование без границ“». Дополнительное образование для школьников 2–11 классов в Уфе.</p>
+      </div>
+      <div>
+        <b>Документы</b>
+        <ul>
+          <li><a href="https://librastudy.ru/aboutcenter/" target="_blank" rel="noopener">Сведения об образовательной организации</a></li>
+          <li><a href="https://librastudy.ru/otchet/" target="_blank" rel="noopener">Публичный отчёт</a></li>
+          <li><a href="https://librastudy.ru/grants/" target="_blank" rel="noopener">Грантовые проекты</a></li>
+          <li><a href="https://librastudy.ru/rules/" target="_blank" rel="noopener">Правила работы с данными</a></li>
+        </ul>
+      </div>
+      <div>
+        <b>Ученикам и родителям</b>
+        <ul>
+          <li><a href="https://librastudy.ru/schedule2/" target="_blank" rel="noopener">Расписание</a></li>
+          <li><a href="https://librastudy.ru/price/" target="_blank" rel="noopener">Цены</a></li>
+          <li><a href="https://librastudy.ru/photos/" target="_blank" rel="noopener">Фотоальбомы</a></li>
+          <li><a href="#zapis">Записаться</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2013–2026 «Образование без границ»</span>
+      <span>Уфа, ул. 8 Марта, 12 · +7 (347) 294-83-30</span>
+      <span>Сайт разработан <a href="https://badretlabs.ru" target="_blank" rel="noopener">badret.labs</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn--ghost" href="tel:+73472948330">Позвонить</a>
+  <a class="btn" href="#zapis">Записаться</a>
+</div>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+
+  /* Реальные фото центра: впишите путь к файлу, например "img/hero.jpg" — заглушка сменится фотографией */
+  var PHOTOS = {
+    hero:"img/hero.jpg",
+    g1:"img/g1.jpg", g2:"img/g2.jpg", g3:"img/g3.jpg", g4:"img/g4.jpg", g5:"img/g5.jpg", g6:"img/g6.jpg", g7:"img/g7.jpg", g8:"img/g8.jpg",
+    sakhanevich:"img/t/sakhanevich.jpg", sitdikova:"img/t/sitdikova.jpg", adeeva:"img/t/adeeva.jpg", nusratullin:"img/t/nusratullin.jpg",
+    simakin:"img/t/simakin.jpg", astafiev:"img/t/astafiev.jpg", kolesnikova:"img/t/kolesnikova.jpg", khalitova:"img/t/khalitova.jpg",
+    musina:"img/t/musina.jpg"
+  };
+  document.querySelectorAll('[data-photo]').forEach(function(el){
+    var src = PHOTOS[el.getAttribute('data-photo')];
+    if(!src) return;
+    var box = el.querySelector('.ph') || el;
+    var img = new Image();
+    img.alt = el.getAttribute('data-alt') || '';
+    img.loading = 'lazy'; img.decoding = 'async';
+    img.onload = function(){ box.classList.add('has-photo'); };
+    img.src = src;
+    box.appendChild(img);
+  });
+
+  /* меню */
+  var burger = document.querySelector('.burger'), nav = document.getElementById('nav');
+  burger.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', function(e){
+    if(e.target.closest('a')){ nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }
+  });
+
+  /* полоса прогресса — «красная ручка» */
+  var bar = document.querySelector('.progress'), ticking = false;
+  function upd(){
+    var h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0) + ')';
+    ticking = false;
+  }
+  addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(upd); } }, {passive:true});
+  upd();
+
+  /* фильтр по классу */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.filter .chipbtn'));
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-grades]'));
+  chips.forEach(function(ch){
+    ch.addEventListener('click', function(){
+      chips.forEach(function(c){ c.setAttribute('aria-pressed', String(c === ch)); });
+      var g = ch.getAttribute('data-g');
+      cards.forEach(function(card){
+        if(g === 'all'){ card.classList.remove('is-dim'); return; }
+        var r = g.split('-').map(Number);
+        var hit = card.getAttribute('data-grades').split(' ').map(Number).some(function(x){ return x >= r[0] && x <= r[1]; });
+        card.classList.toggle('is-dim', !hit);
+      });
+    });
+  });
+
+  /* кнопки «Записаться» подставляют направление в форму */
+  var progSel = document.getElementById('f-prog');
+  document.querySelectorAll('[data-prog]').forEach(function(a){
+    a.addEventListener('click', function(){ progSel.value = a.getAttribute('data-prog'); });
+  });
+
+  /* задача дня */
+  var TASKS = {
+    a:{t:'У Маши три брата и две сестры. Сколько сестёр у её брата Пети?', ans:3, hint:'Не забудьте про саму Машу.', sol:'Сёстры Пети — это Маша и две её сестры. Всего 3.'},
+    b:{t:'Сумма трёх последовательных натуральных чисел равна 51. Найдите наибольшее из них.', ans:18, hint:'Среднее число равно трети суммы.', sol:'Среднее число: 51 : 3 = 17. Значит, числа 16, 17 и 18, наибольшее — 18.'},
+    c:{t:'Поезд длиной 200 м целиком проезжает мост длиной 400 м за 30 секунд. Какова скорость поезда в м/с?', ans:20, hint:'Поезду нужно проехать не только мост, но и собственную длину.', sol:'Путь: 400 + 200 = 600 м. Скорость: 600 : 30 = 20 м/с.'}
+  };
+  var cur = 'a', tabs = document.querySelectorAll('[data-task]');
+  var tText = document.getElementById('task-text'), tIn = document.getElementById('task-input');
+  var tFb = document.getElementById('task-fb'), tSol = document.getElementById('task-sol'), tShow = document.getElementById('task-show');
+  function setTask(k){
+    cur = k;
+    tabs.forEach(function(b){ b.setAttribute('aria-selected', String(b.getAttribute('data-task') === k)); });
+    tText.textContent = TASKS[k].t;
+    tIn.value = ''; tFb.textContent = ''; tFb.className = 'feedback';
+    tSol.hidden = true; tShow.textContent = 'Показать решение';
+  }
+  tabs.forEach(function(b){ b.addEventListener('click', function(){ setTask(b.getAttribute('data-task')); }); });
+  document.getElementById('task-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var raw = tIn.value.trim().replace(',', '.').replace(/[^\d.\-]/g, '');
+    if(raw === ''){ tFb.className = 'feedback no'; tFb.textContent = 'Впишите ответ числом.'; tIn.focus(); return; }
+    var v = Number(raw);
+    if(v === TASKS[cur].ans){ tFb.className = 'feedback ok'; tFb.textContent = 'Верно! Так держать — это уровень наших учеников.'; }
+    else { tFb.className = 'feedback no'; tFb.textContent = 'Пока нет. Подсказка: ' + TASKS[cur].hint; }
+  });
+  tShow.addEventListener('click', function(){
+    var show = tSol.hidden;
+    tSol.textContent = TASKS[cur].sol;
+    tSol.hidden = !show;
+    tShow.textContent = show ? 'Скрыть решение' : 'Показать решение';
+  });
+
+  /* копирование контактов */
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click', function(){
+      var t = b.getAttribute('data-copy');
+      function done(msg){ b.textContent = msg; setTimeout(function(){ b.textContent = 'Копировать'; }, 1600); }
+      function fallback(){
+        var node = b.previousElementSibling;
+        if(node && node.tagName === 'SMALL') node = node.previousElementSibling;
+        if(node){ var r = document.createRange(); r.selectNodeContents(node); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+        done('Выделено');
+      }
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(t).then(function(){ done('Скопировано'); }, fallback);
+        } else fallback();
+      }catch(err){ fallback(); }
+    });
+  });
+
+  /* форма записи (демо) */
+  var form = document.getElementById('lead'), ok = document.getElementById('lead-ok'), err = document.getElementById('f-err');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('f-name').value.trim();
+    var phone = document.getElementById('f-phone').value.replace(/\D/g, '');
+    function fail(msg, id){ err.textContent = msg; err.hidden = false; document.getElementById(id).focus(); }
+    if(!name) return fail('Напишите, как к вам обращаться.', 'f-name');
+    if(phone.length < 10 || phone.length > 11) return fail('Проверьте номер телефона: нужно 10–11 цифр.', 'f-phone');
+    if(!document.getElementById('f-agree').checked) return fail('Отметьте согласие с правилами работы с данными.', 'f-agree');
+    err.hidden = true;
+    ok.querySelector('[data-name]').textContent = name;
+    form.hidden = true; ok.hidden = false;
+  });
+  document.getElementById('lead-again').addEventListener('click', function(){ ok.hidden = true; form.hidden = false; });
+
+  /* мягкое появление блоков: только сдвиг, без скрытия */
+  var rises = document.querySelectorAll('.rise');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {rootMargin:'0px 0px -6% 0px'});
+    rises.forEach(function(el){
+      if(el.getBoundingClientRect().top < innerHeight) el.classList.add('in'); else io.observe(el);
+    });
+  } else rises.forEach(function(el){ el.classList.add('in'); });
+})();
+</script>
+
+</body>
+</html>
